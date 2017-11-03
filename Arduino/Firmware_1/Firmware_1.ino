@@ -1,10 +1,9 @@
 /******************************************************************************
-Firmware de l'Arduino Pro Mini du système de commande de moteur électrique
-à base de pcDuino, disponible à l'adresse:
+Firmware du robot X-Bot pcDuino C / Python, disponible à l'adresse:
 http://boutique.3sigma.fr/12-robots
 
 Auteur: 3Sigma
-Version 1.1 - 15/06/2017
+Version 1.0 - 01/10/2017
 *******************************************************************************/
 
 // Inclusion d'une bibliothèque permettant l'exécution à cadence fixe
