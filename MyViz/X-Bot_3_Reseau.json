@@ -109,7 +109,9 @@
 					"settings": {
 						"title": "Vitesses",
 						"variablevxref": "datasources[\"ws\"][\"vref\"]",
-						"variablexiref": "datasources[\"ws\"][\"xiref\"]"
+						"gain_longi": 1,
+						"variablexiref": "datasources[\"ws\"][\"xiref\"]",
+						"gain_rot": "-1"
 					}
 				}
 			]
@@ -156,37 +158,15 @@
 			]
 		},
 		{
-			"title": "Moniteur",
-			"width": 1,
-			"row": {
-				"3": 29,
-				"4": 23
-			},
-			"col": {
-				"3": 1,
-				"4": 1
-			},
-			"col_width": "1",
-			"widgets": [
-				{
-					"type": "textarea",
-					"settings": {
-						"nblines_window": "10",
-						"value": [
-							"datasources[\"ws\"][\"Raw\"]"
-						]
-					}
-				}
-			]
-		},
-		{
 			"title": "Gains PID longitudinal",
 			"width": 1,
 			"row": {
-				"3": 19
+				"3": 19,
+				"4": 19
 			},
 			"col": {
-				"3": 2
+				"3": 2,
+				"4": 2
 			},
 			"col_width": 1,
 			"widgets": [
@@ -238,10 +218,12 @@
 			"title": "Gain PID rotation",
 			"width": 1,
 			"row": {
-				"3": 19
+				"3": 19,
+				"4": 19
 			},
 			"col": {
-				"3": 3
+				"3": 3,
+				"4": 3
 			},
 			"col_width": 1,
 			"widgets": [
@@ -285,6 +267,30 @@
 						"resolution": 2,
 						"resetvalue": 0,
 						"resetcaption": "Réinitialisation"
+					}
+				}
+			]
+		},
+		{
+			"title": "Moniteur",
+			"width": 1,
+			"row": {
+				"3": 29,
+				"4": 23
+			},
+			"col": {
+				"3": 1,
+				"4": 1
+			},
+			"col_width": "1",
+			"widgets": [
+				{
+					"type": "textarea",
+					"settings": {
+						"nblines_window": "10",
+						"value": [
+							"datasources[\"ws\"][\"Raw\"]"
+						]
 					}
 				}
 			]
