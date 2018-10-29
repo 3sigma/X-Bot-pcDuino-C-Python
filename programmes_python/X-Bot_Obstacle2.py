@@ -7,7 +7,7 @@
 # http://boutique.3sigma.fr/12-robots
 #
 # Auteur: 3Sigma
-# Version 1.0 - 01/10/2017
+# Version 1.2 - 29/10/2018
 ##################################################################################
 
 # Importe les fonctions Arduino pour Python
@@ -72,38 +72,30 @@ W = 0.14 # Largeur du robot
 umax = 6. # valeur max de la tension de commande du moteur
 umin = -6. # valeur min (ou max en négatif) de la tension de commande du moteur
 vxmes = 0. # vitesse longitudinale mesurée
-xidotmes = 0. # vitesse de rotation mesurée
+ximes = 0. # vitesse de rotation mesurée
 Tf = 0.02 # constante de temps de filtrage de l'action dérivée du PID
-Kpvx = 1 # gain proportionnel pour l'asservissement de vitesse longitudinale
-Kivx = 10 # gain intégral pour l'asservissement de vitesse longitudinale
+Kpvx = 2.5 # gain proportionnel pour l'asservissement de vitesse longitudinale
+Kivx = 50 # gain intégral pour l'asservissement de vitesse longitudinale
 Kdvx = 0.00 # gain dérivé pour l'asservissement de vitesse longitudinale
-Kpxidot = 0.1 # gain proportionnel pour l'asservissement de rotation
-Kixidot = 1 # gain intégral pour l'asservissement de rotation
-Kdxidot = 0.000 # gain dérivé pour l'asservissement de rotation
+Kpxi = 0.25 # gain proportionnel pour l'asservissement de rotation
+Kixi = 5 # gain intégral pour l'asservissement de rotation
+Kdxi = 0.000 # gain dérivé pour l'asservissement de rotation
 commande_avant_sat_vx = 0. # commande avant la saturation pour l'asservissement de vitesse longitudinale
 commande_vx = 0. # commande pour l'asservissement de vitesse longitudinale
-commande_avant_sat_xidot = 0. # commande avant la saturation pour l'asservissement de rotation
-commande_xidot = 0. # commande pour l'asservissement de rotation
-P_vx = 0. # action proportionnelle pour l'asservissement de vitesse longitudinale
-I_vx = 0. # action intégrale pour l'asservissement de vitesse longitudinale
-D_vx = 0. # action dérivée pour l'asservissement de vitesse longitudinale
-P_xidot = 0. # action proportionnelle pour l'asservissement de rotation
-I_xidot = 0. # action intégrale pour l'asservissement de rotation
-D_xidot = 0. # action dérivée pour l'asservissement de rotation
+commande_avant_sat_xi = 0. # commande avant la saturation pour l'asservissement de rotation
+commande_xi = 0. # commande pour l'asservissement de rotation
 commandeDroit = 0. # commande en tension calculée par le PID pour le moteur droit
 commandeGauche = 0. # commande en tension calculée par le PID pour le moteur gauche
 omegaDroit = 0. # Vitesse moteur droit
 omegaGauche = 0. # Vitesse moteur gauche
-yprecvx = 0. # Mesure de la vitesse longitudinale au calcul précédent
-yprecxidot = 0. # Mesure de la vitesse de rotation au calcul précédent
-# Variables intermédiaires
-Ti = 0
-ad = 0
-bd = 0
+
+I_x = [0., 0.]
+D_x = [0., 0.]
+erreurprec = [0., 0.] # mesure de la vitesse du moteur droit au calcul précédent
 
 # Déclarations pour les consignes de mouvement
 vxref = 0.
-xidotref = 0.
+xiref = 0.
 
 
 # Cadencement
@@ -111,6 +103,7 @@ T0 = time.time()
 dt = 0.01
 i = 0
 tdebut = 0
+tprec = time.time()
 # Création d'un scheduler pour exécuter des opérations à cadence fixe
 s = sched.scheduler(time.time, time.sleep)
 
@@ -162,11 +155,9 @@ def loop():
 
 
 def CalculVitesse():
-    global started, omegaDroit, omegaGauche, \
-        tdebut, ad, P_vx, I_vx, D_vx, P_xidot, I_xidot, D_xidot, bd, Ti, yprecvx, yprecxidot, \
-        codeurDroitDeltaPos, codeurGaucheDeltaPos, commandeDroit, commandeGauche, vxmes, xidotmes, vxref, xidotref, \
-        pulse_start, pulse_end, pulse_duration, last_pulse_duration, distance, idecimDistance, \
-        idecimLectureTension, decimLectureTension, tensionAlim
+    global started, omegaDroit, omegaGauche, tdebut, tprec, \
+        codeurDroitDeltaPos, codeurGaucheDeltaPos, commandeDroit, commandeGauche, vxmes, ximes, vxref, xiref, \
+        distance, idecimDistance, idecimLectureTension, decimLectureTension, tensionAlim
             
     tdebut = time.time()
 
@@ -212,70 +203,28 @@ def CalculVitesse():
     if (tdebut - T0 > 10) and  (distance > 0):    
         if (distance < 40):
             vxref = 0.
-            xidotref = 3.14
+            xiref = 3.14
         else:
-            xidotref = 0
+            xiref = 0
 
     # Définition des entrées de la fonction d'asservissement
     vxmes = (omegaDroit + omegaGauche)*R/2
-    xidotmes = -(omegaDroit - omegaGauche)*R/W
+    ximes = -(omegaDroit - omegaGauche)*R/W
 
-    # Calcul du PID sur vx
-    # Paramètres intermédiaires
-    Ti = Kivx/(Kpvx + 0.01)
-    ad = Tf/(Tf+dt)
-    bd = Kdvx/(Tf+dt)
+    dt2 = time.time() - tprec
+    tprec = time.time()
     
-    # Terme proportionnel
-    P_vx = Kpvx * (vxref - vxmes)
-
-    # Terme dérivé
-    D_vx = ad * D_vx - bd * (vxmes - yprecvx)
+    # Asservissement PID
+    commande_vx = PID(0, vxref, vxmes, Kpvx, Kivx, Kdvx, Tf, umax, umin, dt2);
+    commande_xi = PID(1, xiref, ximes, Kpxi, Kixi, Kdxi, Tf, umax, umin, dt2);
     
-    # Calcul de la commande
-    commande_vx = P_vx + I_vx
-
-
-    # Terme intégral (sera utilisé lors du pas d'échantillonnage suivant)
-    I_vx = I_vx + Kivx * dt * (vxref - vxmes)
-
-    # Stockage de la mesure courante pour utilisation lors du pas d'échantillonnage suivant
-    yprecvx = vxmes
-    
-    # Fin Calcul du PID sur vx
-
-    # Calcul du PID sur xidot
-    # Paramètres intermédiaires
-    Ti = Kixidot/(Kpxidot + 0.01)
-    ad = Tf/(Tf+dt)
-    bd = Kdxidot/(Tf+dt)
-    
-    # Terme proportionnel
-    P_xidot = Kpxidot * (xidotref - xidotmes)
-
-    # Terme dérivé
-    D_xidot = ad * D_xidot - bd * (xidotmes - yprecxidot)
-    
-    # Calcul de la commande
-    commande_xidot = P_xidot + I_xidot + D_xidot
-
-
-    # Terme intégral (sera utilisé lors du pas d'échantillonnage suivant)
-    I_xidot = I_xidot + Kixidot * dt * (xidotref - xidotmes)
-
-    # Stockage de la mesure courante pour utilisation lors du pas d'échantillonnage suivant
-    yprecxidot = xidotmes
-    
-    # Fin Calcul du PID sur xidot
-
-
     # Calcul des commandes des moteurs
-    commandeDroit = (commande_vx - commande_xidot);
-    commandeGauche = (commande_vx + commande_xidot);
+    commandeDroit = (commande_vx - commande_xi);
+    commandeGauche = (commande_vx + commande_xi);
       
     CommandeMoteurDroit(commandeDroit, tensionBatterie)
     CommandeMoteurGauche(commandeGauche, tensionBatterie)
-    
+        
     # Lecture de la tension d'alimentation
     if idecimLectureTension >= decimLectureTension:
         # La mesure de la tension d'alimentation se fait via un pont diviseur de rapport 3 / 13
@@ -298,6 +247,46 @@ def CalculVitesse():
     #print(time.time() - tdebut)
 
     
+def PID(iMoteur, ref, mes, Kp, Ki, Kd, Tf, umax, umin, dt2):
+    global I_x, D_x, erreurprec
+    
+    # Calcul du PID
+    # Paramètres intermédiaires
+    br = 1. / (Kp + 0.0001)
+    ad = Tf / (Tf + dt2);
+    bd = Kd / (Tf + dt2);
+
+    # Calcul de la commande avant saturation
+    erreur = ref - mes
+    
+    # Terme proportionnel
+    P_x = Kp * erreur
+
+    # Terme dérivé
+    D_x[iMoteur] = ad * D_x[iMoteur] + bd * (erreur - erreurprec[iMoteur])
+
+    # Calcul de la commande avant saturation
+    if (Ki == 0):
+        I_x[iMoteur] = 0.
+    commande_avant_sat = P_x + I_x[iMoteur] + D_x[iMoteur]
+
+    # Application de la saturation sur la commande
+    if (commande_avant_sat > umax):
+        commande = umax
+    elif (commande_avant_sat < umin):
+        commande = umin
+    else:
+        commande = commande_avant_sat
+    
+    # Terme intégral (sera utilisé lors du pas d'échantillonnage suivant)
+    I_x[iMoteur] = I_x[iMoteur] + Ki * dt2 * (erreur + br * (commande - commande_avant_sat))
+    
+    # Stockage de la mesure courante pour utilisation lors du pas d'échantillonnage suivant
+    erreurprec[iMoteur] = erreur
+    
+    return commande
+
+        
 def CommandeMoteurDroit(tension, tensionAlim):
     # Cette fonction calcule et envoi les signaux PWM au pont en H
     # en fonction des tensions de commande et d'alimentation
@@ -352,8 +341,10 @@ def CommandeMoteurGauche(tension, tensionAlim):
 
         
 def emitData():
+    global tprec
     # Délai nécessaire pour que le serveur ait le temps de démarrer
-    delay(5000)
+    #delay(5000)
+    tprec = time.time()
     while not noLoop: loop() # appelle fonction loop sans fin
 
     
@@ -386,14 +377,14 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         commandeGauche = 0.
 
     def sendToSocket(self):
-        global started, codeurDroitDeltaPos, codeurGaucheDeltaPos, socketOK, commandeDroit, commandeGauche, vxref, xidotref, vxmes, xidotmes, \
+        global started, codeurDroitDeltaPos, codeurGaucheDeltaPos, socketOK, commandeDroit, commandeGauche, vxref, xiref, vxmes, ximes, \
             omegaDroit, omegaGauche, vxref
         
         tcourant = time.time() - T0
         aEnvoyer = json.dumps({ 'Temps':("%.2f" % tcourant),
                                 'Consigne vitesse longitudinale':("%.2f" % vxref), \
                                 'Vitesse longitudinale':("%.2f" % vxmes),
-                                'Vitesse de rotation':("%.2f" % (180 * xidotmes/3.141592)),
+                                'Vitesse de rotation':("%.2f" % (180 * ximes/3.141592)),
                                 'omegaDroit':("%.2f" % omegaDroit),
                                 'omegaGauche':("%.2f" % omegaGauche),
                                 'commandeDroit':("%.2f" % commandeDroit),
@@ -402,7 +393,7 @@ class WSHandler(tornado.websocket.WebSocketHandler):
                                 'distance':("%.2f" % distance), \
                                 'Raw':("%.2f" % tcourant) + "," +
                                 ("%.2f" % vxmes) + "," +
-                                ("%.2f" % (180 * xidotmes/3.141592)) + "," +
+                                ("%.2f" % (180 * ximes/3.141592)) + "," +
                                 ("%.2f" % omegaDroit) + "," +
                                 ("%.2f" % omegaGauche) + "," +
                                 ("%.2f" % commandeDroit) + "," +
