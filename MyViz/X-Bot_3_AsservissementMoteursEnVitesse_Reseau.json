@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": "0.8.3",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -23,9 +23,10 @@
 				{
 					"type": "plot",
 					"settings": {
-						"title": "Commande et vitesse",
+						"title": "Vitesse (rad/s) et tension de commande (V)",
 						"xaxis": "datasource_column",
 						"time": "datasources[\"ws\"][\"Temps\"]",
+						"legendX": "Temps (s)",
 						"time_window": "4",
 						"value": [
 							"datasources[\"ws\"][\"Consigne\"]",
@@ -33,15 +34,18 @@
 							"datasources[\"ws\"][\"omegaGauche\"]"
 						],
 						"y_axis_min_range": "-1,1",
+						"offset_y": "0",
 						"y2value": [
 							"datasources[\"ws\"][\"commandeDroit\"]",
 							"datasources[\"ws\"][\"commandeGauche\"]"
 						],
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
-						"legendStr": "Ref (rad/s),Vitesse droit (rad/s),Vitesse gauche (rad/s),Commande droit (V),Commande gauche (V)",
+						"legendStr": "Consigne,Vitesse droit,Vitesse gauche,Commande droit,Commande gauche",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				}
 			]
@@ -51,11 +55,13 @@
 			"width": 1,
 			"row": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -108,7 +114,9 @@
 						"variable": "datasources[\"ws\"][\"typeSignal\"]",
 						"yestext": "Sinus",
 						"notext": "Carré",
-						"initialstate": false
+						"initialstate": false,
+						"yesvalue": "1",
+						"novalue": "0"
 					}
 				},
 				{
@@ -160,12 +168,12 @@
 			"width": 1,
 			"row": {
 				"3": 11,
-				"4": 9,
+				"4": 5,
 				"5": 9
 			},
 			"col": {
 				"3": 3,
-				"4": 4,
+				"4": 1,
 				"5": 3
 			},
 			"col_width": 1,
@@ -197,11 +205,13 @@
 			"width": 1,
 			"row": {
 				"3": 11,
-				"4": 11
+				"4": 11,
+				"5": 11
 			},
 			"col": {
 				"3": 2,
-				"4": 2
+				"4": 1,
+				"5": 2
 			},
 			"col_width": 1,
 			"widgets": [
@@ -239,11 +249,11 @@
 						"title": "Kd",
 						"variable": "datasources[\"ws\"][\"Kd\"]",
 						"formula": "x",
-						"initialvalue": 0,
+						"initialvalue": 0.005,
 						"min": 0,
 						"max": 0.03,
 						"resolution": 3,
-						"resetvalue": 0,
+						"resetvalue": 0.005,
 						"resetcaption": "Réinitialisation"
 					}
 				}
@@ -254,11 +264,13 @@
 			"width": 1,
 			"row": {
 				"3": 17,
-				"4": 23
+				"4": 11,
+				"5": 23
 			},
 			"col": {
 				"3": 3,
-				"4": 1
+				"4": 3,
+				"5": 1
 			},
 			"col_width": "1",
 			"widgets": [
@@ -268,7 +280,8 @@
 						"nblines_window": "5",
 						"value": [
 							"datasources[\"ws\"][\"Raw\"]"
-						]
+						],
+						"initiallyactive": true
 					}
 				}
 			]
@@ -278,11 +291,13 @@
 			"width": 1,
 			"row": {
 				"3": 23,
-				"4": 23
+				"4": 11,
+				"5": 23
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 4,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -292,7 +307,8 @@
 						"value": "datasources[\"ws\"][\"tensionAlim\"]",
 						"units": "V",
 						"min_value": "6.4",
-						"max_value": "8.4"
+						"max_value": "8.4",
+						"gradient": true
 					}
 				}
 			]
@@ -311,5 +327,5 @@
 			}
 		}
 	],
-	"columns": 3
+	"columns": 4
 }

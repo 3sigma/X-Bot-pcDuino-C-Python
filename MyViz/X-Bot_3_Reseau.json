@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": "0.8.3",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -15,7 +15,7 @@
 			"col": {
 				"2": 2,
 				"3": 2,
-				"4": 3,
+				"4": 2,
 				"5": 3
 			},
 			"col_width": "2",
@@ -32,11 +32,14 @@
 							"datasources[\"ws\"][\"Vitesse longitudinale\"]"
 						],
 						"y_axis_min_range": "-0.2,0.2",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
 						"legendStr": "vxref,vxmes",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				},
 				{
@@ -51,11 +54,14 @@
 							"datasources[\"ws\"][\"Vitesse de rotation\"]"
 						],
 						"y_axis_min_range": "-0.1,0.1",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
 						"legendStr": "xiref,ximes",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				}
 			]
@@ -65,11 +71,13 @@
 			"width": 1,
 			"row": {
 				"3": 1,
-				"4": 9
+				"4": 1,
+				"5": 9
 			},
 			"col": {
 				"3": 1,
-				"4": 2
+				"4": 1,
+				"5": 2
 			},
 			"col_width": 1,
 			"widgets": [
@@ -96,11 +104,13 @@
 			"width": 1,
 			"row": {
 				"3": 5,
-				"4": 1
+				"4": 5,
+				"5": 1
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -121,11 +131,13 @@
 			"width": 1,
 			"row": {
 				"3": 15,
-				"4": 17
+				"4": 1,
+				"5": 17
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 4,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -162,11 +174,13 @@
 			"width": 1,
 			"row": {
 				"3": 19,
-				"4": 19
+				"4": 19,
+				"5": 19
 			},
 			"col": {
 				"3": 2,
-				"4": 2
+				"4": 2,
+				"5": 2
 			},
 			"col_width": 1,
 			"widgets": [
@@ -176,11 +190,11 @@
 						"title": "Kp",
 						"variable": "datasources[\"ws\"][\"Kpvx\"]",
 						"formula": "x",
-						"initialvalue": 1,
+						"initialvalue": 2.5,
 						"min": 0,
-						"max": 2,
+						"max": 10,
 						"resolution": 2,
-						"resetvalue": 1,
+						"resetvalue": 2.5,
 						"resetcaption": "Réinitialisation"
 					}
 				},
@@ -190,11 +204,11 @@
 						"title": "Ki",
 						"variable": "datasources[\"ws\"][\"Kivx\"]",
 						"formula": "x",
-						"initialvalue": 10,
+						"initialvalue": 50,
 						"min": 0,
-						"max": 20,
+						"max": 100,
 						"resolution": 1,
-						"resetvalue": 10,
+						"resetvalue": 50,
 						"resetcaption": "Réinitialisation"
 					}
 				},
@@ -219,11 +233,13 @@
 			"width": 1,
 			"row": {
 				"3": 19,
-				"4": 19
+				"4": 19,
+				"5": 19
 			},
 			"col": {
 				"3": 3,
-				"4": 3
+				"4": 3,
+				"5": 3
 			},
 			"col_width": 1,
 			"widgets": [
@@ -233,11 +249,11 @@
 						"title": "Kp",
 						"variable": "datasources[\"ws\"][\"Kpxi\"]",
 						"formula": "x",
-						"initialvalue": 0.1,
+						"initialvalue": 0.25,
 						"min": 0,
-						"max": 0.2,
+						"max": 1,
 						"resolution": 2,
-						"resetvalue": 0.1,
+						"resetvalue": 0.25,
 						"resetcaption": "Réinitialisation"
 					}
 				},
@@ -247,11 +263,11 @@
 						"title": "Ki",
 						"variable": "datasources[\"ws\"][\"Kixi\"]",
 						"formula": "x",
-						"initialvalue": 1,
+						"initialvalue": 5,
 						"min": 0,
-						"max": 2,
+						"max": 10,
 						"resolution": 2,
-						"resetvalue": 1,
+						"resetvalue": 5,
 						"resetcaption": "Réinitialisation"
 					}
 				},
@@ -276,11 +292,13 @@
 			"width": 1,
 			"row": {
 				"3": 29,
-				"4": 23
+				"4": 15,
+				"5": 23
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": "1",
 			"widgets": [
@@ -304,9 +322,10 @@
 				"host": "ws://192.168.0.199:9090/ws",
 				"variables_to_send": "vref,xiref,Kpvx,Kivx,Kdvx,Kpxi,Kixi,Kdxi",
 				"refresh_rate": "500",
-				"checksum": "none"
+				"checksum": "none",
+				"name": "ws"
 			}
 		}
 	],
-	"columns": 3
+	"columns": 4
 }

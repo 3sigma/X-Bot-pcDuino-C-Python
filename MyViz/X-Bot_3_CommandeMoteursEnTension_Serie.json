@@ -33,11 +33,14 @@
 							"datasources[\"sp\"][\"omegaGauche\"]"
 						],
 						"y_axis_min_range": "-1,1",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
 						"legendStr": "Tension (V),Vitesse mot. droit (rad/s), Vitesse mot. gauche (rad/s)",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				}
 			]
@@ -47,11 +50,13 @@
 			"width": 1,
 			"row": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -96,7 +101,9 @@
 						"title": "Type de signal (carré ou sinus)",
 						"variable": "datasources[\"sp\"][\"typeSignal\"]",
 						"yestext": "Sinus",
+						"yesvalue": "1",
 						"notext": "Carré",
+						"novalue": "0",
 						"initialstate": false
 					}
 				},
@@ -145,40 +152,16 @@
 			]
 		},
 		{
-			"title": "Moniteur",
-			"width": 1,
-			"row": {
-				"3": 11,
-				"4": 23
-			},
-			"col": {
-				"3": 2,
-				"4": 1
-			},
-			"col_width": "1",
-			"widgets": [
-				{
-					"type": "textarea",
-					"settings": {
-						"nblines_window": "5",
-						"value": [
-							"datasources[\"sp\"][\"_rawdata\"]"
-						]
-					}
-				}
-			]
-		},
-		{
 			"title": "Vitesse moteurs",
 			"width": 1,
 			"row": {
 				"3": 11,
-				"4": 9,
+				"4": 5,
 				"5": 9
 			},
 			"col": {
 				"3": 3,
-				"4": 4,
+				"4": 1,
 				"5": 3
 			},
 			"col_width": 1,
@@ -210,11 +193,13 @@
 			"width": 1,
 			"row": {
 				"3": 17,
-				"4": 17
+				"4": 11,
+				"5": 17
 			},
 			"col": {
 				"3": 3,
-				"4": 3
+				"4": 3,
+				"5": 3
 			},
 			"col_width": 1,
 			"widgets": [
@@ -228,6 +213,32 @@
 					}
 				}
 			]
+		},
+		{
+			"title": "Moniteur",
+			"width": 1,
+			"row": {
+				"3": 11,
+				"4": 11,
+				"5": 23
+			},
+			"col": {
+				"3": 2,
+				"4": 1,
+				"5": 1
+			},
+			"col_width": "1",
+			"widgets": [
+				{
+					"type": "textarea",
+					"settings": {
+						"nblines_window": "5",
+						"value": [
+							"datasources[\"sp\"][\"_rawdata\"]"
+						]
+					}
+				}
+			]
 		}
 	],
 	"datasources": [
@@ -235,16 +246,17 @@
 			"name": "sp",
 			"type": "serialport",
 			"settings": {
-				"port": "COM5",
+				"port": "COM78",
 				"baudrate": 115200,
 				"variables_to_read": "Temps,TCopie,Consigne,omegaDroit,omegaGauche,TensionAlim",
 				"variables_to_send": "typeSignal,offset,amplitude,frequence,moteurint",
 				"refresh_rate": "500",
 				"separator": ",",
 				"checksum": "sum",
-				"immediate_startup": false
+				"immediate_startup": false,
+				"name": "sp"
 			}
 		}
 	],
-	"columns": 3
+	"columns": 4
 }

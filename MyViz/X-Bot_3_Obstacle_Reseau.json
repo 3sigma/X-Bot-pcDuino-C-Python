@@ -15,7 +15,7 @@
 			"col": {
 				"2": 2,
 				"3": 2,
-				"4": 3,
+				"4": 2,
 				"5": 3
 			},
 			"col_width": "2",
@@ -32,11 +32,14 @@
 							"datasources[\"ws\"][\"Vitesse longitudinale\"]"
 						],
 						"y_axis_min_range": "-0.2,0.2",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
 						"legendStr": "vxref,vxmes",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				},
 				{
@@ -50,11 +53,14 @@
 							"datasources[\"ws\"][\"Vitesse de rotation\"]"
 						],
 						"y_axis_min_range": "-0.1,0.1",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
 						"legendStr": "ximes",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				},
 				{
@@ -68,11 +74,14 @@
 							"datasources[\"ws\"][\"distance\"]"
 						],
 						"y_axis_min_range": "-10,10",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"include_legend": true,
 						"legendStr": "distance",
 						"height": 4,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				}
 			]
@@ -82,11 +91,13 @@
 			"width": 1,
 			"row": {
 				"3": 1,
-				"4": 9
+				"4": 1,
+				"5": 9
 			},
 			"col": {
 				"3": 1,
-				"4": 2
+				"4": 1,
+				"5": 2
 			},
 			"col_width": 1,
 			"widgets": [
@@ -113,11 +124,13 @@
 			"width": 1,
 			"row": {
 				"3": 5,
-				"4": 1
+				"4": 5,
+				"5": 1
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -142,11 +155,13 @@
 			"width": 1,
 			"row": {
 				"3": 11,
-				"4": 11
+				"4": 11,
+				"5": 11
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": 1,
 			"widgets": [
@@ -166,11 +181,13 @@
 			"width": 1,
 			"row": {
 				"3": 19,
-				"4": 23
+				"4": 19,
+				"5": 23
 			},
 			"col": {
 				"3": 1,
-				"4": 1
+				"4": 1,
+				"5": 1
 			},
 			"col_width": "1",
 			"widgets": [
@@ -194,9 +211,10 @@
 				"host": "ws://192.168.0.199:9090/ws",
 				"variables_to_send": "vxref",
 				"refresh_rate": "500",
-				"checksum": "none"
+				"checksum": "none",
+				"name": "ws"
 			}
 		}
 	],
-	"columns": 3
+	"columns": 4
 }
