@@ -7,7 +7,7 @@
 # http://boutique.3sigma.fr/12-robots
 #
 # Auteur: 3Sigma
-# Version 1.0 - 01/10/2017
+# Version 1.1 - 19/06/2018
 ##################################################################################
 
 # Importe les fonctions Arduino pour Python
@@ -319,7 +319,7 @@ def CommandeMoteurGauche(tension, tensionAlim):
         
 def emitData():
     # Délai nécessaire pour que le serveur ait le temps de démarrer
-    delay(5000)
+    #delay(5000)
     while not noLoop: loop() # appelle fonction loop sans fin
 
     
