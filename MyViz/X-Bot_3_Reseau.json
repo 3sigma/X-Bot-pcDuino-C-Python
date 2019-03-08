@@ -1,5 +1,5 @@
 {
-	"version": "0.8.3",
+	"version": "0.8.10",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -93,7 +93,10 @@
 						"offcommand": "/root/programmes_python/stopPythonPWM.sh",
 						"ontext": "ON",
 						"offtext": "OFF",
+						"stop_when_exit": true,
 						"initialstate": false,
+						"onvalue": "1",
+						"offvalue": "0",
 						"caption": "Switch ON"
 					}
 				}
@@ -152,9 +155,12 @@
 							"datasources[\"ws\"][\"distance\"]"
 						],
 						"y_axis_min_range": "0,10",
+						"offset_y": "0",
 						"y2_axis_min_range": "-10,10",
+						"offset_y2": "0",
 						"height": 3,
-						"pausable": true
+						"pausable": true,
+						"refreshperiod": 50
 					}
 				},
 				{
@@ -164,7 +170,8 @@
 						"value": "datasources[\"ws\"][\"TensionAlim\"]",
 						"units": "V",
 						"min_value": "6.4",
-						"max_value": "8.4"
+						"max_value": "8.4",
+						"gradient": false
 					}
 				}
 			]
@@ -195,7 +202,8 @@
 						"max": 10,
 						"resolution": 2,
 						"resetvalue": 2.5,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				},
 				{
@@ -209,7 +217,8 @@
 						"max": 100,
 						"resolution": 1,
 						"resetvalue": 50,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				},
 				{
@@ -223,7 +232,8 @@
 						"max": 1,
 						"resolution": 2,
 						"resetvalue": 0,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				}
 			]
@@ -254,7 +264,8 @@
 						"max": 1,
 						"resolution": 2,
 						"resetvalue": 0.25,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				},
 				{
@@ -268,7 +279,8 @@
 						"max": 10,
 						"resolution": 2,
 						"resetvalue": 5,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				},
 				{
@@ -282,7 +294,8 @@
 						"max": 1,
 						"resolution": 2,
 						"resetvalue": 0,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				}
 			]
@@ -308,7 +321,9 @@
 						"nblines_window": "10",
 						"value": [
 							"datasources[\"ws\"][\"Raw\"]"
-						]
+						],
+						"initiallyactive": true,
+						"height": 3
 					}
 				}
 			]
@@ -322,8 +337,7 @@
 				"host": "ws://192.168.0.199:9090/ws",
 				"variables_to_send": "vref,xiref,Kpvx,Kivx,Kdvx,Kpxi,Kixi,Kdxi",
 				"refresh_rate": "500",
-				"checksum": "none",
-				"name": "ws"
+				"checksum": "none"
 			}
 		}
 	],

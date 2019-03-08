@@ -1,5 +1,5 @@
 {
-	"version": "0.8.3",
+	"version": "0.8.10",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -68,7 +68,10 @@
 						"offcommand": "/root/programmes_python/stopPythonPWM.sh",
 						"ontext": "ON",
 						"offtext": "OFF",
+						"stop_when_exit": true,
 						"initialstate": false,
+						"onvalue": "1",
+						"offvalue": "0",
 						"caption": "Switch ON"
 					}
 				}
@@ -98,7 +101,8 @@
 						"max": 5,
 						"resolution": 1,
 						"resetvalue": 2.5,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				}
 			]
@@ -203,7 +207,8 @@
 						"max": 6,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				}
 			]
@@ -269,7 +274,9 @@
 						"nblines_window": "10",
 						"value": [
 							"datasources[\"ws\"][\"Raw\"]"
-						]
+						],
+						"initiallyactive": true,
+						"height": 3
 					}
 				}
 			]
@@ -283,8 +290,7 @@
 				"host": "ws://192.168.0.199:9090/ws",
 				"variables_to_send": "vref,seuil",
 				"refresh_rate": "500",
-				"checksum": "none",
-				"name": "ws"
+				"checksum": "none"
 			}
 		}
 	],

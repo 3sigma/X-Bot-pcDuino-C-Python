@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": "0.8.10",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -118,7 +118,8 @@
 						"max": 6,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				},
 				{
@@ -132,7 +133,8 @@
 						"max": 6,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				},
 				{
@@ -146,7 +148,8 @@
 						"max": 5,
 						"resolution": 2,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				}
 			]
@@ -189,32 +192,6 @@
 			]
 		},
 		{
-			"title": "Tension batterie",
-			"width": 1,
-			"row": {
-				"3": 17,
-				"4": 11,
-				"5": 17
-			},
-			"col": {
-				"3": 3,
-				"4": 3,
-				"5": 3
-			},
-			"col_width": 1,
-			"widgets": [
-				{
-					"type": "gauge",
-					"settings": {
-						"value": "datasources[\"sp\"][\"TensionAlim\"]",
-						"units": "V",
-						"min_value": "6.4",
-						"max_value": "8.4"
-					}
-				}
-			]
-		},
-		{
 			"title": "Moniteur",
 			"width": 1,
 			"row": {
@@ -239,6 +216,33 @@
 					}
 				}
 			]
+		},
+		{
+			"title": "Tension batterie",
+			"width": 1,
+			"row": {
+				"3": 17,
+				"4": 11,
+				"5": 17
+			},
+			"col": {
+				"3": 3,
+				"4": 3,
+				"5": 3
+			},
+			"col_width": 1,
+			"widgets": [
+				{
+					"type": "gauge",
+					"settings": {
+						"value": "datasources[\"sp\"][\"TensionAlim\"]",
+						"units": "V",
+						"min_value": "6.4",
+						"max_value": "8.4",
+						"gradient": false
+					}
+				}
+			]
 		}
 	],
 	"datasources": [
@@ -246,7 +250,8 @@
 			"name": "sp",
 			"type": "serialport",
 			"settings": {
-				"port": "COM78",
+				"use_default_port": true,
+				"port": "COM28",
 				"baudrate": 115200,
 				"variables_to_read": "Temps,TCopie,Consigne,omegaDroit,omegaGauche,TensionAlim",
 				"variables_to_send": "typeSignal,offset,amplitude,frequence,moteurint",
@@ -254,7 +259,8 @@
 				"separator": ",",
 				"checksum": "sum",
 				"immediate_startup": false,
-				"name": "sp"
+				"initialchecksum": "none",
+				"initialdelay": 2000
 			}
 		}
 	],

@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": "0.8.10",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -72,7 +72,10 @@
 						"offcommand": "/root/programmes_python/stopPythonPWM.sh",
 						"ontext": "ON",
 						"offtext": "OFF",
+						"stop_when_exit": true,
 						"initialstate": false,
+						"onvalue": "1",
+						"offvalue": "0",
 						"caption": "Switch ON"
 					}
 				}
@@ -108,7 +111,9 @@
 						"title": "Type de signal (carré ou sinus)",
 						"variable": "datasources[\"ws\"][\"typeSignal\"]",
 						"yestext": "Sinus",
+						"yesvalue": "1",
 						"notext": "Carré",
+						"novalue": "0",
 						"initialstate": false
 					}
 				},
@@ -123,7 +128,8 @@
 						"max": 6,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				},
 				{
@@ -137,7 +143,8 @@
 						"max": 6,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				},
 				{
@@ -151,7 +158,8 @@
 						"max": 5,
 						"resolution": 2,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				}
 			]
@@ -255,8 +263,7 @@
 				"host": "ws://192.168.0.199:9090/ws",
 				"variables_to_send": "typeSignal,offset,amplitude,frequence,moteurint",
 				"refresh_rate": 500,
-				"checksum": "none",
-				"name": "ws"
+				"checksum": "none"
 			}
 		}
 	],

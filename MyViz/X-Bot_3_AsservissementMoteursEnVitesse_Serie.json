@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": "0.8.10",
 	"allow_edit": true,
 	"plugins": [],
 	"panes": [
@@ -122,7 +122,8 @@
 						"max": 10,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				},
 				{
@@ -136,7 +137,8 @@
 						"max": 10,
 						"resolution": 1,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				},
 				{
@@ -150,7 +152,8 @@
 						"max": 5,
 						"resolution": 2,
 						"resetvalue": 0,
-						"resetcaption": "Reset"
+						"resetcaption": "Reset",
+						"continuous_update": true
 					}
 				}
 			]
@@ -218,7 +221,8 @@
 						"max": 2,
 						"resolution": 2,
 						"resetvalue": 0.25,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				},
 				{
@@ -232,7 +236,8 @@
 						"max": 10,
 						"resolution": 2,
 						"resetvalue": 5,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				},
 				{
@@ -246,7 +251,8 @@
 						"max": 0.03,
 						"resolution": 3,
 						"resetvalue": 0,
-						"resetcaption": "Réinitialisation"
+						"resetcaption": "Réinitialisation",
+						"continuous_update": true
 					}
 				}
 			]
@@ -272,7 +278,9 @@
 						"nblines_window": "5",
 						"value": [
 							"datasources[\"sp\"][\"_rawdata\"]"
-						]
+						],
+						"initiallyactive": true,
+						"height": 3
 					}
 				}
 			]
@@ -298,7 +306,8 @@
 						"value": "datasources[\"sp\"][\"TensionAlim\"]",
 						"units": "V",
 						"min_value": "6.4",
-						"max_value": "8.4"
+						"max_value": "8.4",
+						"gradient": false
 					}
 				}
 			]
@@ -309,6 +318,7 @@
 			"name": "sp",
 			"type": "serialport",
 			"settings": {
+				"use_default_port": true,
 				"port": "COM4",
 				"baudrate": 115200,
 				"variables_to_read": "Temps,TCopie,Consigne,VitesseDroit,VitesseGauche,CommandeDroit,CommandeGauche,TensionAlim",
@@ -316,7 +326,9 @@
 				"refresh_rate": 500,
 				"separator": ",",
 				"checksum": "sum",
-				"immediate_startup": false
+				"immediate_startup": false,
+				"initialchecksum": "none",
+				"initialdelay": 2000
 			}
 		}
 	],
